@@ -26,6 +26,8 @@ import datetime
 try:
     import requests
 except ImportError:
+    import sys
+
     sys.exit("You need requests module. Install it by running pip install requests.")
 
 # Code
@@ -44,13 +46,13 @@ for y in years:
         os.mkdir(base_pos+str(y))
     year_pos = base_pos + str(y)
     for d in (d for d in days if (y < last_advent_of_code_year or d <= last_advent_of_code_day)):
-        print("    Day "+str(d));
+        print("    Day "+str(d))
         if not os.path.exists(year_pos+"/"+str(d)):
             os.mkdir(year_pos+"/"+str(d))
         day_pos = year_pos+"/"+str(d)
         if MAKE_CODE_TEMPLATE and not os.path.exists(day_pos+"/code.py"):
             code = open(day_pos+"/code.py", "w+")
-            code.write("# Advent of code Year "+str(y)+" Day "+str(d)+" solution\n# Author = "+author+"\n# Date = "+date+"\n\nwith open((__file__.rstrip(\"code.py\")+\"input.txt\"), 'r') as input_file:\n    input = input_file.read()\n\n\n\nprint(\"Part One : \"+ str(None))\n\n\n\nprint(\"Part Two : \"+ str(None))")
+            code.write("# Advent of code Year "+str(y)+" Day "+str(d)+" solution\n# Author = "+author+"\n# Date = "+date+"\n\nwith open((__file__.rstrip(\"code.py\")+\"input.txt\"), 'r') as input_file:\n    input = input_file.read()\n\n\n\nprint(\"Part One : \", None)\n\n\n\nprint(\"Part Two : \", None)")
             code.close()
         if DOWNLOAD_INPUTS and (not os.path.exists(day_pos+"/input.txt") or OVERWRITE)and USER_SESSION_ID != "":
             done = False
