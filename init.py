@@ -20,15 +20,16 @@ OVERWRITE = False          # If you really need to download the whole thing agai
 date = "December 2019"              # Date automatically put in the code templates.
 starting_advent_of_code_year = 2019 # You can go as early as 2015.
 last_advent_of_code_year = 2019     # The setup will download all advent of code data up until that date included
-last_advent_of_code_day = 7         # If the year isn't finished, the setup will download days up until that day included for the last year
+last_advent_of_code_day = 3        # If the year isn't finished, the setup will download days up until that day included for the last year
 # Imports
 import datetime
 try:
     import requests
+    from html2text import html2text
 except ImportError:
     import sys
 
-    sys.exit("You need requests module. Install it by running pip install requests.")
+    sys.exit("You need requests and html2text module. Install it by running `pip install requests html2text`.")
 
 # Code
 MAX_RECONNECT_ATTEMPT = 2
@@ -80,7 +81,7 @@ for y in years:
                 except Exception as e:
                     print("        Non handled error while requesting input from server. " + str(e))
                     done = True
-        if DOWNLOAD_STATEMENTS and (not os.path.exists(day_pos+"/statement.html") or OVERWRITE):
+        if DOWNLOAD_STATEMENTS and (not os.path.exists(day_pos+"/statement.md") or OVERWRITE):
             done = False
             error_count = 0
             while(not done):
@@ -91,8 +92,8 @@ for y in years:
                             start = html.find("<article")
                             end = html.rfind("</article>")+len("</article>")
                             end_success = html.rfind("</code>")+len("</code>")
-                            statement = open(day_pos+"/statement.html", "w+")
-                            statement.write(html[start:max(end, end_success)])
+                            statement = open(day_pos+"/statement.md", "w+")
+                            statement.write(html2text(html[start:max(end, end_success)]))
                             statement.close()
                         done = True
                 except requests.exceptions.RequestException:
