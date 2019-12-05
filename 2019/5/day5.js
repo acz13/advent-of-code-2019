@@ -3,8 +3,25 @@ const interpretIntcode = require('./intcode.js')
 
 const intcode = fs.readFileSync('input.txt', 'utf8')
 
-console.log("Part 1")
-interpretIntcode(intcode.split(',').map(Number), () => 1, console.log.bind(console))
+const readline = require('readline')
 
-console.log("Part 2")
-interpretIntcode(intcode.split(',').map(Number), () => 5, console.log.bind(console))
+const rli = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+})
+
+function input() {
+    return new Promise((resolve, reject) => {
+        rli.question('Input: ', input => {
+            const num = +input
+            if (isNaN(num)) {
+                reject('Must enter int')
+            } else {
+                resolve(num)
+            }
+        })
+    })
+}
+
+interpretIntcode(intcode.split(',').map(Number), input, console.log.bind(console))
+    .then(() => rli.close())
