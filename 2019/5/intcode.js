@@ -9,34 +9,34 @@ const IMMEDIATE = "1"
 
 const instructions = {
     1: {
-        handler ({ code, args }) {
+        async handler ({ code, args }) {
             code[args[2]] = args[0] + args[1]
         },
         argLen: 3,
         store: true
     },
     2: {
-        handler ({ code, args }) {
+        async handler ({ code, args }) {
             code[args[2]] = args[0] * args[1]
         },
         argLen: 3,
         store: true
     },
     3: {
-        handler ({ code, args, input }) {
-            code[args[0]] = input()
+        async handler ({ code, args, input }) {
+            code[args[0]] = await input()
         },
         argLen: 1,
         store: true
     },
     4: {
-        handler ({ args, output }) {
+        async handler ({ args, output }) {
             output(args[0])
         },
         argLen: 1,
     },
     5: {
-        handler({ args }) {
+        async handler({ args }) {
             if (args[0] !== 0) {
                 return args[1]
             }
@@ -44,7 +44,7 @@ const instructions = {
         argLen: 2
     },
     6: {
-        handler({ args }) {
+        async handler({ args }) {
             if (args[0] === 0) {
                 return args[1]
             }
@@ -52,7 +52,7 @@ const instructions = {
         argLen: 2
     },
     7: {
-        handler({ code, args }) {
+        async handler({ code, args }) {
             if (args[0] < args[1]) {
                 code[args[2]] = 1
             } else {
@@ -63,7 +63,7 @@ const instructions = {
         store: true
     },
     8: {
-        handler({ code, args }) {
+        async handler({ code, args }) {
             if (args[0] === args[1]) {
                 code[args[2]] = 1
             } else {
@@ -74,12 +74,14 @@ const instructions = {
         store: true
     },
     99: {
-        handler: () => null,
+        async handler () {
+            return null
+        },
         argLen: 0
     }
 }
 
-function interpretIntcode(intcode, input, output) {
+async function interpretIntcode(intcode, input, output) {
     let idx = 0
 
     while (true) {
@@ -122,7 +124,7 @@ function interpretIntcode(intcode, input, output) {
         }
 
         // console.log({ idx, val, args, modes, params})
-        const jump = instr.handler({ code: intcode, args: args, output: output, input: input })
+        const jump = await instr.handler({ code: intcode, args: args, output: output, input: input })
         if (jump) {
             idx = jump
         } else {
