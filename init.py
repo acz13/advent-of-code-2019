@@ -20,21 +20,22 @@ OVERWRITE = False          # If you really need to download the whole thing agai
 date = "December 2019"              # Date automatically put in the code templates.
 starting_advent_of_code_year = 2019 # You can go as early as 2015.
 last_advent_of_code_year = 2019     # The setup will download all advent of code data up until that date included
-last_advent_of_code_day = 3        # If the year isn't finished, the setup will download days up until that day included for the last year
+last_advent_of_code_day = 10000        # If the year isn't finished, the setup will download days up until that day included for the last year
+import sys
 # Imports
 import datetime
 try:
     import requests
     from html2text import html2text
 except ImportError:
-    import sys
+    
 
     sys.exit("You need requests and html2text module. Install it by running `pip install requests html2text`.")
 
 # Code
 MAX_RECONNECT_ATTEMPT = 2
 years = range(starting_advent_of_code_year, last_advent_of_code_year+1)
-days = range(1,26)
+days = [int(sys.argv[1])]
 link = "https://adventofcode.com/" # ex use : https://adventofcode.com/2017/day/19/input
 USER_AGENT = "adventofcode_working_directories_creator"
 
