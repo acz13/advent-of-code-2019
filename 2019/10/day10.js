@@ -67,7 +67,7 @@ queue.sort((a, b) => a[1] - b[1] || b[2] - a[2])
 
 let c = 0
 
-while (queue.length && c < 200) {
+while (queue.length > 1) {
     const toRemove = []
 
     for (var i = 0; i < queue.length; i++) {
@@ -87,5 +87,7 @@ while (queue.length && c < 200) {
         queue.pop(toRemove.pop(i))
     }
 }
+
+annihilate.push(queue[0])
 
 console.log(annihilate[199][0][0] * 100 + annihilate[199][0][1])
