@@ -1,0 +1,59 @@
+;; Whitelips assembly https://vii5ard.github.io/whitespace/
+
+;; Help I am a whitespace noob
+
+;; Heap address 100 -> number of increases (what we want to output)
+push 100
+push 0
+store
+
+;; Heap address 1 -> Number input
+;; Read the first integer to the stack (We don't want to increment anything here)
+push 1
+dup
+readi
+retrieve
+
+jmp .readLoop
+
+.readLoop:
+	;; Read into heap address 1
+	push 1
+	dup
+	readi
+	retrieve
+
+	;; IDK how to deal with EOF so I'm just checking for 0 (works for this AoC at least)
+	dup
+	jz .end
+
+	;; The stack should now have the current number on top of the previous number
+	call .inc
+
+	;; Put the last inputted number back on the stack
+	push 1
+	retrieve
+
+	jmp .readLoop
+
+.end:
+	push 100
+	retrieve
+	printi
+	end
+
+;; Wrapper subroutine for conditional
+.inc:
+	sub
+	jn _inc
+	ret
+
+;; Increments the value in heap address 100
+_inc:
+	push 100
+	dup
+	retrieve
+	push 1
+	add
+	store
+	ret
