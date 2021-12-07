@@ -1,9 +1,7 @@
 with open("input.txt", "r") as f:
     points = [[int(x) for k in line.strip().split(" -> ") for x in k.split(",")] for line in f.readlines()]
 
-fpoints = [l for l in points if l[0] == l[2] or l[1] == l[3]]
-dpoints = [l for l in points if l[0] != l[2] and l[1] != l[3]]
-
+# Please remember to use Counter next time...
 covered = {}
 for l in fpoints:
     for x in range(min(l[0], l[2]), max(l[0], l[2])+1):
