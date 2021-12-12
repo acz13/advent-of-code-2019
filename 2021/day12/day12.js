@@ -22,17 +22,23 @@ for (const line of k.trim().split("\n")) {
 }
 
 completed = []
-frontier = [{ path: ["start"], smalls: new Set(["start"]) }]
+frontier = [{
+  path: ["start"],
+  smalls: new Set(["start"])
+}]
 while (frontier.length > 0) {
-  let { path, smalls } = frontier.pop()
-  let c = path[path.length-1]
+  let {
+    path,
+    smalls
+  } = frontier.pop()
+  let c = path[path.length - 1]
 
   if (c == "end") {
     completed.push(path)
     continue
   }
-  
-  for (const n of graph[c])  {
+
+  for (const n of graph[c]) {
     let _smalls = smalls
     if (small(n)) {
       if (smalls.has(n)) {
@@ -40,8 +46,11 @@ while (frontier.length > 0) {
       }
       _smalls = new Set([...smalls, n])
     }
-		_path = [...path, n]
-		frontier.push({ path: _path, smalls: _smalls })
+    _path = [...path, n]
+    frontier.push({
+      path: _path,
+      smalls: _smalls
+    })
   }
 }
 
@@ -49,17 +58,25 @@ while (frontier.length > 0) {
 console.log(completed.length)
 
 completed = []
-frontier = [{ path: ["start"], smalls: new Set([]), double: false }]
+frontier = [{
+  path: ["start"],
+  smalls: new Set([]),
+  double: false
+}]
 while (frontier.length > 0) {
-  let { path, smalls, double } = frontier.pop()
-  let c = path[path.length-1]
+  let {
+    path,
+    smalls,
+    double
+  } = frontier.pop()
+  let c = path[path.length - 1]
 
   if (c == "end") {
     completed.push(path)
     continue
   }
-  
-  for (const n of graph[c])  {
+
+  for (const n of graph[c]) {
     if (n === "start") {
       continue
     }
@@ -68,15 +85,19 @@ while (frontier.length > 0) {
     if (small(n)) {
       if (smalls.has(n)) {
         if (double) {
-        	continue
+          continue
         }
         _double = true;
       }
       _smalls = new Set([...smalls, n])
     }
 
-		_path = [...path, n]
-		frontier.push({ path: _path, smalls: _smalls, double: _double })
+    _path = [...path, n]
+    frontier.push({
+      path: _path,
+      smalls: _smalls,
+      double: _double
+    })
   }
 }
 
