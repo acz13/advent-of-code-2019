@@ -1,1 +1,1 @@
-print((f:=lambda d,j:int([(j:=[k for k in j if(k[b]==d)==([i[b]for i in j].count("1")*2>=len(j))])for b in __import__("itertools").takewhile(lambda _:'j' not in vars()or len(j)>1,range(len(j[0])))][-1][0],2))("1",(l:=__import__("sys").stdin.readlines()))*f("0",l))
+print((f:=lambda d,j:int([(j:=[k for k in j if(k[b]==d)==([i[b]for i in j].count("1")*2>=len(j))])for b in range(len(j[0])) if len(j)>1][-1][0],2))("1",(l:=__import__("sys").stdin.readlines()))*f("0",l))
