@@ -17,8 +17,8 @@ def offsets(s, i=0):
 def position(s1, s2):
     s1s = set(s1)
     for i in range(len(s1)-11):
+        s1o = s1[i]
         for j in range(len(s2)-11):
-            s1o, _    = offsets(s1, i)
             s2o, s2os = offsets(s2, j)
             for ri, r in enumerate(rotations):
                 _s2os = set(s1o + r(p) for p in s2os)
