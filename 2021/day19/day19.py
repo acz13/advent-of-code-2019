@@ -11,17 +11,14 @@ for line in open("input.txt").readlines():
     elif len(line) > 1:
         scanner.append(eval("Point("+line.strip()+")"))
 
-def offsets(s, i=0):
-    return s[i], tuple(p - s[i] for p in s)
-
 def position(s1, s2):
     s1s = set(s1)
     for i in range(len(s1)-11):
         s1o = s1[i]
         for j in range(len(s2)-11):
-            s2o, s2os = offsets(s2, j)
+            s2o = s2[j]
             for ri, r in enumerate(rotations):
-                _s2os = set(s1o + r(p) for p in s2os)
+                _s2os = set(s1o + r(p - s2o) for p in s2)
                 if len(s1s & _s2os) >= 12:
                     return ri, s1o - r(s2o), (s1s | _s2os)
 
