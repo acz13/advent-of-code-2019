@@ -17,9 +17,9 @@ author = "Albert Zhang"               # Name automatically put in the code templ
 OVERWRITE = False          # If you really need to download the whole thing again, set this to true. As the creator said, AoC is fragile; please be gentle. Statements and Inputs do not change. This will not overwrite codes.
 
 # DATE SPECIFIC PARAMETERS
-date = "December 2019"              # Date automatically put in the code templates.
-starting_advent_of_code_year = 2019 # You can go as early as 2015.
-last_advent_of_code_year = 2019     # The setup will download all advent of code data up until that date included
+date = "December 2023"              # Date automatically put in the code templates.
+starting_advent_of_code_year = 2023 # You can go as early as 2015.
+last_advent_of_code_year = 2023     # The setup will download all advent of code data up until that date included
 last_advent_of_code_day = 10000        # If the year isn't finished, the setup will download days up until that day included for the last year
 import sys
 # Imports
