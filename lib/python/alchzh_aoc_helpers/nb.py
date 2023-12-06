@@ -7,7 +7,8 @@ from ipywidgets.widgets import (
     Widget,
     RadioButtons,
     Layout,
-    Output
+    Output,
+    FileUpload
 )
 from IPython.core.display import display
 from IPython.core.getipython import get_ipython
@@ -25,6 +26,7 @@ class AOCWidget:
 
     input_button: Button
     example_button: Button
+    file_upload: FileUpload
 
     submit_input: Text
     submit_button: Button
@@ -53,6 +55,12 @@ class AOCWidget:
             disabled=False
         )
         self.example_button.on_click(self.load_example)
+        self.file_upload = FileUpload(
+            description="Load from File",
+            disabled=False,
+            multiple=False
+        )
+        self.file_upload.observe(self.load_file, names="value")
         self.submit_input = Text(
             placeholder="Submission"
         )
@@ -67,6 +75,7 @@ class AOCWidget:
             HBox([
                 self.input_button,
                 self.example_button,
+                self.file_upload,
             ]),
             HBox([
                 self.submit_input,
@@ -107,6 +116,11 @@ class AOCWidget:
             if example.answer_b:
                 self.submit_input.value += f"B: {example.answer_b} "
             self.submit_button.disabled = True
+
+    def load_file(self, change):
+        fileinfo, = change.value
+        self.ta.value = fileinfo.content.tobytes().decode("utf-8")
+        self.submit.disabled = True
 
     def submit(self, _):
         self.output.clear_output()
